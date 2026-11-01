@@ -1,0 +1,79 @@
+[project]
+name = "detailed-sensor-analysis"
+dynamic = ["version"]
+description = "Characterise a camera sensor from astrophotography calibration frames"
+readme = "README.md"
+license = "MIT"
+authors = [{ name = "Sam Weisz" }]
+requires-python = ">=3.12"
+keywords = [
+    "astrophotography", "astronomy", "camera", "sensor", "photon-transfer", "emva1288",
+    "read-noise", "dark-current", "calibration", "fits", "raw",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Win32 (MS Windows)",
+    "Environment :: X11 Applications :: Qt",
+    "Intended Audience :: End Users/Desktop",
+    "Intended Audience :: Science/Research",
+    "Operating System :: Microsoft :: Windows",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Astronomy",
+    "Topic :: Scientific/Engineering :: Image Processing",
+]
+dependencies = [
+    "astropy>=8.0.2",
+    "exifread>=3.5.1",
+    "matplotlib>=3.11.2",
+    "numpy>=2.5.4",
+    "pyqt6>=6.12.0",
+    "pyqtgraph>=0.14.0",
+    "rawpy>=0.28.0",
+    "scipy>=1.18.1",
+    "tifffile>=2026.10.15",
+]
+
+[project.urls]
+Homepage = "https://github.com/Sam-de-Ham/detailed-sensor-analysis"
+Issues = "https://github.com/Sam-de-Ham/detailed-sensor-analysis/issues"
+Changelog = "https://github.com/Sam-de-Ham/detailed-sensor-analysis/blob/main/CHANGELOG.md"
+
+[project.scripts]
+dsa = "dsa.cli:main"
+
+[project.gui-scripts]
+dsa-gui = "dsa.ui.app:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+path = "src/dsa/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/dsa"]
+
+[tool.hatch.build.targets.sdist]
+exclude = ["/data", "/docs/images", "/.github"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "RUF"]
+ignore = ["RUF001", "RUF002", "RUF003"]  # typographic characters (σ, ×, –, °) are deliberate
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+    "ruff>=0.17.3",
+]
+
+[tool.ruff.format]
+line-ending = "lf"
